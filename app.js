@@ -25,15 +25,15 @@ const userRoutes = require('./routes/users')
 
 const mongoSanitize = require('express-mongo-sanitize'); 
 const MongoDBStore = require('connect-mongo')(session);
-// const dbUrl = process.env.DB_URL
-const dbUrl2 = 'mongodb://127.0.0.1:27017/yelp-camp'
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp'
+// const dbUrl2 = 'mongodb://127.0.0.1:27017/yelp-camp'
 
 
 
 
 const app = express();
 
-mongoose.connect(dbUrl2,  { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbUrl,  { useNewUrlParser: true, useUnifiedTopology: true })
 // mongoose.connect(dbUrl,  { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("CONNECTION OPEN!!!")
