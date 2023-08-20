@@ -1,6 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
+const PORT = process.env.PORT || 3000
 
 
 const express = require(`express`);
@@ -29,7 +30,20 @@ const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp'
 // const dbUrl2 = 'mongodb://127.0.0.1:27017/yelp-camp'
 
 
-
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
 
 const app = express();
 
@@ -54,7 +68,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 const store = new MongoDBStore({
-    url : dbUrl2,
+    url : dbUrl,
     secret : "thisisasecret",
     touchAfter : 24*60*60
 });
