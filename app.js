@@ -3,7 +3,8 @@ if(process.env.NODE_ENV !== "production"){
 }
 const PORT = process.env.PORT || 3000
 
-
+const accessToken = process.env.accessToken;
+const client = mapboxgl({ accessToken });
 const express = require(`express`);
 const mongoose = require('mongoose');
 const helmet = require('helmet')
